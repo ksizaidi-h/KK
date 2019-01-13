@@ -1,0 +1,8 @@
+-classpath '/Users/mac/Desktop/TP_OUTILS/JENKINS/Jenkins/build/classes/java/main:/Users/mac/Desktop/TP_OUTILS/JENKINS/Jenkins/build/resources/main'
+-d '/Users/mac/Desktop/TP_OUTILS/JENKINS/Jenkins/build/docs/javadoc'
+-doctitle 'matrix 1.0 API'
+-quiet 
+-windowtitle 'matrix 1.0 API'
+'/Users/mac/Desktop/TP_OUTILS/JENKINS/Jenkins/src/main/java/model/Matrix.java'
+'/Users/mac/Desktop/TP_OUTILS/JENKINS/Jenkins/src/main/java/service/MatrixMathematics.java'
+'/Users/mac/Desktop/TP_OUTILS/JENKINS/Jenkins/src/main/java/exception/NoSquareException.java'

@@ -1,0 +1,92 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id "org.sonarqube" version "2.6.2"
+    id "com.alexleventer.slack" version "1.0.3"
+    id 'maven-publish'
+}
+group 'matrix'
+version '1.0'
+
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+jacoco {
+    toolVersion = "0.8.2"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/TestReports/jacocoHtml")
+    }
+}
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.6
+            }
+        }
+    }
+}
+test.finalizedBy("jacocoTestReport","jacocoTestCoverageVerification")
+
+task generateMatrixAPI (type:Copy){
+    from ("${buildDir}/TestReports") {
+        include '/'
+        into 'TestReports'
+    }
+    from ("${buildDir}/libs") {
+        include '/'
+        into 'API'
+    }
+    from ("${buildDir}/docs") {
+        include '/'
+        into 'Documentation'
+    }
+    into "/Users/mac/Desktop/MatrixRelease/Matrix_v_1.0"
+}
+
+build.dependsOn generateMatrixAPI
+
+
+task uploadArchives
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact('build/libs/matrix-1.0.jar') {
+                extension 'zip'
+            }
+        }
+    }
+    repositories {
+        maven {
+            name 'deploy'
+            url "https://mymavenrepo.com/repo/ZKMNmih8ZBhYEbDs8wgA/"
+            credentials {
+                username = "myMavenRepo"
+                password = "admin"
+            }
+        }
+    }
+}
+
+
+uploadArchives.dependsOn publish
+
+slack {
+    webhookUrl "https://hooks.slack.com/services/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"
+    username "xoxp-522407053698-522239839092-522407735906-d7d4bdedfe3467f29fc60fcb107b48c9"
+    shouldMonitor "uploadArchives"
+}
