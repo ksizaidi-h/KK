@@ -25,11 +25,9 @@ pipeline {
       parallel {
          stage('SonarQube') {
                     steps {
-                        script {
-                            scannerHome = tool 'SonarQube Scanner 3.2.0.1227'
-                        }
+                       
                         withSonarQubeEnv('sonarqube') {
-                          sh "${scannerHome}/bin/sonar-scanner"
+                          sh '/Users/mac/Downloads/sonar-scanner-3.2.0.1227-macosx/bin/sonar-scanner'
                         }
                           waitForQualityGate abortPipeline: true
                     }
