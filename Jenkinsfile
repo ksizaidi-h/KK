@@ -11,7 +11,6 @@ pipeline {
       }
     }
       stage('Mail Notification'){
-        steps {
                post {
                       failure {
                         mail(subject: '[Report]', body: 'Greetings,<br> The build failed', from: 'fm_ameddah@esi.dz', to: 'kowdou@gmail.com')
@@ -23,9 +22,6 @@ pipeline {
 
                       }
                   }
-              
-              }
-      
     }
     
      stage('Code analysis') {
