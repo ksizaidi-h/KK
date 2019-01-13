@@ -8,9 +8,8 @@ pipeline {
         archiveArtifacts 'build/libs/*.jar'
         archiveArtifacts 'build/docs/javadoc/*'
       }
-      stage('Mail Notification')
-            {
-              
+      stage('Mail Notification'){
+        steps {
                post {
                       failure {
                         mail(subject: '[Report]', body: 'Greetings,<br> The build failed', from: 'fm_ameddah@esi.dz', to: 'kowdou@gmail.com')
@@ -21,8 +20,9 @@ pipeline {
                         mail(subject: '[Report]', body: 'Greetings,<br> The build successeded', from: 'fm_ameddah@esi.dz', to: 'kowdou@gmail.com')
 
                       }
-               }
-            }
+                  }
+              
+              }
       
     }
     
