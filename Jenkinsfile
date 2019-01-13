@@ -53,6 +53,17 @@ pipeline {
         sh '/usr/local/Cellar/gradle/4.10.2/libexec/bin/gradle uploadArchives'
       }
     }
+    
+    
+    stage('slack notification') {
+     when{
+            branch 'master'
+          }
+      steps {
+        slackSend(message: 'Salam, Project deployed')
+
+      }
+    }
      
   
   }
