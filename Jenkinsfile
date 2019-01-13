@@ -28,8 +28,8 @@ pipeline {
             withSonarQubeEnv('sonarqube') {
               sh '/Users/mac/Downloads/sonar-scanner-3.2.0.1227-macosx/bin/sonar-scanner'
             }
-            waitForQualityGate abortPipeline: true
 
+            waitForQualityGate true
           }
         }
         stage('Test Reporting') {
