@@ -28,9 +28,11 @@ pipeline {
       parallel {
          stage('SonarQube') {
                     steps {
+                       
                         withSonarQubeEnv('sonarqube') {
                           sh '/Users/mac/Downloads/sonar-scanner-3.2.0.1227-macosx/bin/sonar-scanner'
                         }
+                          waitForQualityGate abortPipeline: false
                     }
                   }
           
@@ -41,17 +43,7 @@ pipeline {
             }
         }
       }
-    
-    
-     stage('Deployment') {
-      when{
-        branch 'master'
-      }
-      steps {
-        sh '/usr/local/Cellar/gradle/4.10.2/libexec/bin/gradle uploadArchives'
-      }
-    }
-         
-  
+     
+
   }
 }
