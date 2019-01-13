@@ -29,12 +29,12 @@ pipeline {
               sh '/Users/mac/Downloads/sonar-scanner-3.2.0.1227-macosx/bin/sonar-scanner'
             }
 
-            waitForQualityGate false
+            waitForQualityGate true
           }
         }
         stage('Test Reporting') {
           steps {
-            jacoco(maximumBranchCoverage: '60')
+            jacoco(maximumBranchCoverage: '20')
           }
         }
       }
