@@ -9,16 +9,17 @@ pipeline {
         archiveArtifacts 'build/libs/*.jar'
         archiveArtifacts 'build/docs/javadoc/*'
       }
-       post {
-              failure {
-                mail(subject: 'Repported changes', body: 'Salam, some changes occured and the build failed', from: 'fa_chenine@esi.dz', to: 'chenineazeddine5@gmail.com')
-              }
+        post {
+                      failure {
+                        mail(subject: '[Report]', body: 'Greetings,<br> The build failed', from: 'fm_ameddah@esi.dz', to: 'kowdou@gmail.com')
 
-              success {
-                mail(subject: 'Repported changes', body: 'Salam, some changes occured and the build successeded', from: 'fa_chenine@esi.dz', to: 'chenineazeddine5@gmail.com')
-              }
+                      }
 
-         }
+                      success {
+                        mail(subject: '[Report]', body: 'Greetings,<br> The build successeded', from: 'fm_ameddah@esi.dz', to: 'kowdou@gmail.com')
+
+                      }
+              }
       
     }
     
@@ -27,7 +28,6 @@ pipeline {
       parallel {
          stage('SonarQube') {
                     steps {
-                       
                         withSonarQubeEnv('sonarqube') {
                           sh '/Users/mac/Downloads/sonar-scanner-3.2.0.1227-macosx/bin/sonar-scanner'
                         }
@@ -43,15 +43,16 @@ pipeline {
         }
       }
     
-    stage('slack notification') {
-      when {
+    
+     stage('Deployment') {
+      when{
         branch 'master'
       }
       steps {
-        slackSend(message: 'Salam, Project deployed')
+        sh '/usr/local/Cellar/gradle/4.10.2/libexec/bin/gradle uploadArchives'
       }
     }
-     
+         
   
   }
 }
