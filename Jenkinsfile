@@ -1,5 +1,6 @@
 pipeline {
   agent any
+
   stages {
     stage('Build') {
       steps {
@@ -8,6 +9,7 @@ pipeline {
         archiveArtifacts 'build/libs/*.jar'
         archiveArtifacts 'build/docs/javadoc/*'
       }
+    }
       stage('Mail Notification'){
         steps {
                post {
@@ -45,7 +47,8 @@ pipeline {
               }
             }
         }
-   }
-    
+ }
+     
+  
   }
 }
