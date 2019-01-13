@@ -29,7 +29,7 @@ pipeline {
               sh '/Users/mac/Downloads/sonar-scanner-3.2.0.1227-macosx/bin/sonar-scanner'
             }
 
-            waitForQualityGate true
+            waitForQualityGate false
           }
         }
         stage('Test Reporting') {
