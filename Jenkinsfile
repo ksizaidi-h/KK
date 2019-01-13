@@ -10,19 +10,11 @@ pipeline {
         archiveArtifacts 'build/docs/javadoc/*'
       }
     }
-      stage('Mail Notification'){
-               post {
-                      failure {
-                        mail(subject: '[Report]', body: 'Greetings,<br> The build failed', from: 'fm_ameddah@esi.dz', to: 'kowdou@gmail.com')
-
-                      }
-
-                      success {
-                        mail(subject: '[Report]', body: 'Greetings,<br> The build successeded', from: 'fm_ameddah@esi.dz', to: 'kowdou@gmail.com')
-
-                      }
-                  }
-    }
+      stage('Mail notification') {
+        steps {
+          mail(subject: 'notification ', body: 'new deployment', to: 'fm_ameddah@esi.dz')
+        }
+      }
     
      stage('Code analysis') {
       parallel {
