@@ -21,5 +21,21 @@ pipeline {
          }
       
     }
+      stage('Code analysis') {
+      parallel {
+         stage('SonarQube') {
+                    steps {
+                        script {
+                            scannerHome = tool 'SonarQube Scanner 3.2.0.1227'
+                        }
+                        withSonarQubeEnv('sonarqube') {
+                          sh "${scannerHome}/bin/sonar-scanner"
+                        }
+                          waitForQualityGate abortPipeline: true
+                    }
+                  }
+        }
+    }
+  
   }
 }
