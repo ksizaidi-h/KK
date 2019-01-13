@@ -9,16 +9,23 @@ pipeline {
         archiveArtifacts 'build/libs/*.jar'
         archiveArtifacts 'build/docs/javadoc/*'
       }
+        post {
+                      failure {
+                        mail(subject: '[Report]', body: 'Greetings,<br> The build failed', from: 'fm_ameddah@esi.dz', to: 'kowdou@gmail.com')
+
+                      }
+
+                      success {
+                        mail(subject: '[Report]', body: 'Greetings,<br> The build successeded', from: 'fm_ameddah@esi.dz', to: 'kowdou@gmail.com')
+
+                      }
+              }
+      
     }
-      stage('Mail notification') {
-        steps {
-          mail(subject: 'notification ', body: 'new deployment', to: 'fm_ameddah@esi.dz')
-        }
-      }
+    
     
      stage('Code analysis') {
       parallel {
-        
          stage('SonarQube') {
                     steps {
                        
@@ -35,7 +42,17 @@ pipeline {
               }
             }
         }
- }
+      }
+    
+    
+     stage('Deployment') {
+      when{
+        branch 'master'
+      }
+      steps {
+        sh '/usr/local/Cellar/gradle/4.10.2/libexec/bin/gradle uploadArchives'
+      }
+    }
      
   
   }
