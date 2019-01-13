@@ -8,7 +8,7 @@ pipeline {
         archiveArtifacts 'build/libs/*.jar'
         archiveArtifacts 'build/docs/javadoc/*'
       }
-      stage('Mail Notification)
+      stage('Mail Notification')
             {
               
                post {
