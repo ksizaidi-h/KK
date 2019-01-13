@@ -21,7 +21,8 @@ pipeline {
          }
       
     }
-      stage('Code analysis') {
+    
+     stage('Code analysis') {
       parallel {
         
          stage('SonarQube') {
@@ -33,14 +34,15 @@ pipeline {
                           waitForQualityGate abortPipeline: false
                     }
                   }
-        }
+          
          stage('Test Reporting') {
               steps {
                 jacoco(maximumBranchCoverage: '60')
               }
             }
         }
-    }
+ }
+     
   
   }
 }
