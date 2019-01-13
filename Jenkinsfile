@@ -23,15 +23,22 @@ pipeline {
     }
       stage('Code analysis') {
       parallel {
+        
          stage('SonarQube') {
                     steps {
                        
                         withSonarQubeEnv('sonarqube') {
                           sh '/Users/mac/Downloads/sonar-scanner-3.2.0.1227-macosx/bin/sonar-scanner'
                         }
-                          waitForQualityGate abortPipeline: true
+                          waitForQualityGate abortPipeline: false
                     }
                   }
+        }
+         stage('Test Reporting') {
+              steps {
+                jacoco(maximumBranchCoverage: '60')
+              }
+            }
         }
     }
   
